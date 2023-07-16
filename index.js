@@ -13,18 +13,16 @@ dotenv.config();
 
 const app = express();
 
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  next();
-});
-
 mongoose
   .connect(process.env.MONGO)
   .then(() => console.log("connected to mongoDB"))
   .catch((err) => console.log(err));
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin: ['https://venerable-puppy-abc1c9.netlify.app', 'https://astonishing-selkie-1827de.netlify.app']
+}));
+
 
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
