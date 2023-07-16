@@ -22,15 +22,16 @@ const connectDB = async () => {
   }
 };
 
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  next();
-}, cors());
+app.use(cors({ 
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'] 
+}));
+app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.send("Deployed successfully")
-})
-app.use(express.json());
+  res.send("Deployed successfully");
+});
+
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
 app.use("/api/products", productRoute);
