@@ -13,15 +13,17 @@ dotenv.config();
 
 const app = express();
 
-mongoose
-  .connect(process.env.MONGO)
-  .then(() => console.log("connected to mongoDB"))
-  .catch((err) => console.log(err));
+const connectDB = async () => {
+  try {
+    const conn = await mongoose.connect(process.env.MONGO);
+    console.log(`MongoDB Connected: ${conn.connection.host}`);
+  } catch (err) {
+    console.log(err);
+  }
+};
 
 app.use(express.json());
 app.use(cors());
-
-
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
 app.use("/api/products", productRoute);
@@ -48,6 +50,8 @@ app.post("/api/checkout/payment", async (req, res) => {
   );
 });
 
-app.listen(process.env.PORT, () => {
-  console.log("server on");
+connectDB().then(() => {
+  app.listen(process.env.PORT, () => {
+    console.log("listening for requests");
+  });
 });
