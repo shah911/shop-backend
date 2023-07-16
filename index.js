@@ -20,6 +20,16 @@ mongoose
 
 app.use(express.json());
 app.use(cors());
+app.use(function (req, res, next) {
+  res.setHeader(
+    "Access-Control-Allow-Origin",
+    "https://64b3e0138584bd2c4da70a8e--venerable-puppy-abc1c9.netlify.app, https://64b3e0938584bd2cd7a70821--astonishing-selkie-1827de.netlify.app"
+  );
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  next();
+});
+
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
 app.use("/api/products", productRoute);
