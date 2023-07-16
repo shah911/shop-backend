@@ -19,9 +19,7 @@ mongoose
   .catch((err) => console.log(err));
 
 app.use(express.json());
-app.use(cors({
-  origin: ['https://venerable-puppy-abc1c9.netlify.app', 'https://astonishing-selkie-1827de.netlify.app']
-}));
+app.use(cors());
 
 
 app.use("/api/auth", authRoute);
